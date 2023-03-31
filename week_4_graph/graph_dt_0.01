@@ -1,0 +1,22 @@
+#include <fstream>  // text out ofstream
+#include < iostream>
+#include <cmath>    // sin
+using namespace std;
+const float PI = 3.141592;  // define
+int main() {
+float t = 0.0, dt, T;
+dt = 0.01 ;
+T = 0.5;
+int num_periods = 0;
+
+ofstream doug("woong5.txt");
+for (t = 0.0; t < T; t += dt) {
+doug << t << "    " << exp(-110 * t) * sin(2. * PI * 110 * t) << "   " << exp(-110 * t) * cos(2. * PI * 110 * t) << endl;
+if (cos(220 * PI * t) > 0 && cos(220 * PI * (t - dt)) < 0) {
+num_periods++;
+}
+}
+doug.close();
+
+cout << "periods is:  " << num_periods << endl;
+return 12;
