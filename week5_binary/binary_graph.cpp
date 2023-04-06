@@ -8,20 +8,20 @@ int main() {
 	header = new char[12];
 	int* n;
 	float* f;
-	short* p, *a, *data;  // Æ÷ÀÎÅÍ ¼±¾ğ
+	short* p, *a, *data;  // í¬ì¸í„° ì„ ì–¸
 	
 	n = (int*)header;
 	f = (float*)(header + 4);
 	a = (short*)(f + 1);
-	p = (short*)(header + 10); //ÁÖ¼Ò ÇÒ´ç
+	p = (short*)(header + 10); //ì£¼ì†Œ í• ë‹¹
 
-	*n = 500;     //µ¥ÀÌÅÍ ¼±¾ğ
+	*n = 500;     //ë°ì´í„° ì„ ì–¸
 	*f = 1000.0; 
 	*p = 12;
 	*a = 1000;
 
 	//sprint 1
-	//¾²±â
+	//ì“°ê¸°
 	ofstream xx("a.dat", ios::binary | ios::out);
 	if (!xx) {
 		cout << "File not found : " << endl;
@@ -30,7 +30,7 @@ int main() {
 	xx.write(header, 12 * sizeof(char));
 	xx.close();
 	
-	//ÀĞ±â
+	//ì½ê¸°
 	ifstream yy("a.dat", ios::binary | ios::in);
 	if (!yy) {
 		cout << "File not found : " << endl;
@@ -39,9 +39,9 @@ int main() {
 	yy.read(header, 12 * sizeof(char));
 	yy.close();
 
-	//sprint 2, ÁÖÆÄ¼ö º¯°æ ÈÄ ´Ù½Ã ¾²±â
-	*f = 700.0;    //*f = 700 º¯°æ
-	//´Ù½Ã ¾²±â
+	//sprint 2, ì£¼íŒŒìˆ˜ ë³€ê²½ í›„ ë‹¤ì‹œ ì“°ê¸°
+	*f = 700.0;    //*f = 700 ë³€ê²½
+	//ë‹¤ì‹œ ì“°ê¸°
 	ofstream xx2("b.dat", ios::binary | ios::out);
 	if (!xx2) {
 		cout << "File not found : " << endl;
@@ -50,8 +50,8 @@ int main() {
 	xx2.write(header, 12 * sizeof(char));
 	xx2.close();
 
-	//sprint 3. ÆÄÀÏ ÀĞ°í »ùÇÃ Ã¤¿ì±â
-	//a.dat¿¡¼­ ÁÖÆÄ¼ö »Ì±â
+	//sprint 3. íŒŒì¼ ì½ê³  ìƒ˜í”Œ ì±„ìš°ê¸°
+	//a.datì—ì„œ ì£¼íŒŒìˆ˜ ë½‘ê¸°
 	ifstream yy1("a.dat", ios::binary | ios::in);
 	if (!yy1) {
 		cout << "File not found : " << endl;
@@ -61,10 +61,10 @@ int main() {
 	yy1.close();
 
 
-	data = new short[*n]; //data ÇÒ´ç. n[0] = 500
+	data = new short[*n]; //data í• ë‹¹. n[0] = 500
 	const float pi = 3.141592;
 	
-	float dt = 1. / f[0] / 20.0; //f[0] = 1000(ÁÖÆÄ¼ö)
+	float dt = 1. / f[0] / 20.0; //f[0] = 1000(ì£¼íŒŒìˆ˜)
 
 	for (int i = 0; i < n[0]; i++) {
 		data[i] = (short)(a[0] * sin(2.0 * pi * i * f[0] * dt));
@@ -78,7 +78,7 @@ int main() {
 	xx3.write((char*)data, n[0] * sizeof(short));
 	xx3.close();
 
-	//b.dat¿¡¼­ ÁÖÆÄ¼ö »Ì±â
+	//b.datì—ì„œ ì£¼íŒŒìˆ˜ ë½‘ê¸°
 	ifstream yy2("b.dat", ios::binary | ios::in);
 	if (!yy1) {
 		cout << "File not found : " << endl;
@@ -86,7 +86,7 @@ int main() {
 	}
 	yy2.read(header, 12 * sizeof(char));
 	yy2.close();
-	//ÀÌÁ¦ ÁÖÆÄ¼ö´Â 700
+	//ì´ì œ ì£¼íŒŒìˆ˜ëŠ” 700
 	for (int i = 0; i < n[0]; i++) {
 		data[i] = (short)(a[0] * sin(2.0 * pi * i * f[0] * dt));
 	}
