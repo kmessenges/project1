@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+void PrintMe(int ii) {
+	cout << "  I am " << ii << "  years old.\n";
+}
+void PrintMe(float xx) {
+	cout << "  I am " << xx << "  cm tall.\n";
+}
+void PrintMe(string yy) {
+	cout << "  I am " << yy << "  number.\n";
+}
+void PrintMe(char zz) {
+	cout << "  I am " << zz << "  kg.\n";
+}
+
+void PrintMe(int ii, float xx, string yy, char zz) {
+	PrintMe(ii);
+	PrintMe(xx);
+	PrintMe(yy);
+	PrintMe(zz);
+}
+void main() {
+	float height = 170.0;
+	int age = 23;
+    string k_number = "2020104184";
+	char m_weight = '<';
+
+
+	PrintMe(age);
+	PrintMe(height);
+	PrintMe(k_number);
+	PrintMe(m_weight);
+	PrintMe(age, height, k_number, m_weight);
+	getchar();
+}
