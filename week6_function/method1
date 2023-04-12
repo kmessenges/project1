@@ -1,0 +1,33 @@
+#include <fstream>
+#include <iostream>
+
+using namespace std;
+
+int m1(int a) { return a * 5; }
+float m2(float b) { return b * b; }
+int main() {
+    int i[1];
+    int j[5];
+    float k[3];
+  
+    ofstream outfile("jsbin1.dat", ios::out | ios::binary);
+    if (!outfile) {
+        cout << "no file : " << endl;
+        return 0;
+    }
+    i[0] = 1234;
+    outfile.write((char*)&i[0], sizeof(i[0]));
+
+    for (int a = 0, i = 1000; i <= 5000; i += 1000, a++) {
+        j[a] = m1(i);
+        outfile.write((char*)(j+a), sizeof(j[a]));
+    }
+    for (int a = 0; a < 3; a++) {
+        float f = -0.5 + 0.5 * a;
+        k[a] = m2(f);
+        outfile.write((char*)&k[a], sizeof(k[a]));
+        outfile.write((char*)&k[a], sizeof(k[a]));
+    }
+    outfile.close();
+    return 0;
+}
