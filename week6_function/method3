@@ -1,0 +1,43 @@
+#include <fstream>
+#include <iostream>
+
+using namespace std;
+void m0(int* v1) {
+    *v1 = 1234;
+}
+void m1(int* v2) {
+    for (int i = 1000; i <= 5000; i += 1000) {
+        int a = (i - 1000) / 1000;
+        *(v2 + a) = i * 5;
+    }
+}
+
+// float -0.5에서 0.5씩 증가하면서 자승을 한 수 3개 쓰기
+void m2(float* v3) {
+    for (int a = 0; a < 3; a++) {
+        float f = -0.5 + 0.5 * a;
+        *(v3+a) = f * f;
+    }
+}
+
+int main() {
+     ofstream outfile("jsbin3.dat", ios::out | ios::binary);
+     char* reader;
+     reader = new char[36];
+
+     m0((int*)reader);
+     m1((int*)reader + 1);
+     m2((float*)reader + 6);
+
+     
+    if (!outfile) {
+        cout << "no file : " << endl;
+        return 0;
+    }
+    // 값 쓰기
+    outfile.write((char*)reader, 36);
+
+    // 파일 닫기
+    outfile.close();
+    return 0;
+}
