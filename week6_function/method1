@@ -26,7 +26,6 @@ int main() {
         float f = -0.5 + 0.5 * a;
         k[a] = m2(f);
         outfile.write((char*)&k[a], sizeof(k[a]));
-        outfile.write((char*)&k[a], sizeof(k[a]));
     }
     outfile.close();
     return 0;
