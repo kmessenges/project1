@@ -1,0 +1,52 @@
+#include <fstream>
+#include <iostream>
+
+using namespace std;
+
+// int 1234 입력
+void m0(int* v1) {
+    *v1 = 1234;
+}
+// int 1000부터 5000까지 숫자에 5를 곱한 수 5개 쓰기
+void m1(int* v2) {
+    for (int i = 1000; i <= 5000; i += 1000) {
+        int a = (i - 1000) / 1000;
+        *(v2 + a) = i * 5;
+    }
+}
+
+// float -0.5에서 0.5씩 증가하면서 자승을 한 수 3개 쓰기
+void m2(float* v3) {
+    for (int a = 0; a < 3; a++) {
+        float f = -0.5 + 0.5 * a;
+        *(v3 + a) = f * f;
+    }
+}
+
+// All 함수: m0, m1, m2 호출 후 파일에 저장
+int All(char* fn) {
+    ofstream outfile(fn, ios::out | ios::binary);
+    char* reader;
+    reader = new char[36];
+
+    m0((int*)reader);
+    m1((int*)reader + 1);
+    m2((float*)reader + 6);
+
+    if (!outfile) {
+        cout << "no file : " << endl;
+        return 0;
+    }
+    // 값 쓰기
+    outfile.write((char*)reader, 36);
+
+    // 파일 닫기
+    outfile.close();
+    delete reader;
+    return 0;
+}
+
+int main(){
+    All((char*)"jsbin4.dat");
+    return 0;
+}
