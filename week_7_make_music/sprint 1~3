@@ -28,6 +28,7 @@ int main() {
 	*b = n[0] * fs[0] * sizeof(short); //44100 * 1 *2
 
 	xx.read((char*)data, N * sizeof(short));
+	xx.close();
 
 	ofstream yy("sprint2.wav", ios::binary | ios::out);
 	if (!yy) return 666;
