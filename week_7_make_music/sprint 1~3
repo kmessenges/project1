@@ -1,0 +1,54 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+int main() {
+	char header[44];
+	unsigned short* n;//num channel
+	int* fs; //samplerate
+	int* b; //byteRate
+	// read binary file
+	ifstream xx;
+	xx.open("Beatles-LetItBe-wav_30s.wav", ios::binary | ios::in);
+	if (!xx) return 666;
+	xx.read(header, sizeof(header));
+
+	n = (unsigned short*)(header + 22);
+	fs = (int*)(header + 24);
+	b = (int*)(header + 28);
+	cout << *n << endl;
+	cout << *fs << endl;
+	cout << *b << endl;
+	//sprint 1 end
+
+	int N = fs[0] * 10; //
+	short* data;
+	data = new short[N];
+
+	*n = 1;
+	*b = n[0] * fs[0] * sizeof(short); //44100 * 1 *2
+
+	xx.read((char*)data, N * sizeof(short));
+
+	ofstream yy("sprint2.wav", ios::binary | ios::out);
+	if (!yy) return 666;
+	yy.write(header, 44 * sizeof(char));
+	yy.write((char*)data, N * sizeof(short));
+	yy.close();
+	//sprint 2 end
+
+	const float pi = 3.141592;
+	float dt = 1. / fs[0], a = 10000.0, f = 440.0;
+	for (int i = 0; i < fs[0]; i++) {
+		data[i] = (short)(a * sin(2.0 * pi * f * i * dt));
+	}
+	ofstream zz("my2.wav", ios::binary | ios::out);
+	if (!zz) return 666;
+	zz.write(header, 44 * sizeof(char));
+	zz.write((char*)data, fs[0]* sizeof(short));
+	zz.close();
+
+	//sprint 3 end
+    
+	//현재 numchannels = 1, byterate = 88200
+
+}
