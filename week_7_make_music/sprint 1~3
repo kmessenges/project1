@@ -41,7 +41,7 @@ int main() {
 	for (int i = 0; i < fs[0]; i++) {
 		data[i] = (short)(a * sin(2.0 * pi * f * i * dt));
 	}
-	ofstream zz("my2.wav", ios::binary | ios::out);
+	ofstream zz("sprint3.wav", ios::binary | ios::out);
 	if (!zz) return 666;
 	zz.write(header, 44 * sizeof(char));
 	zz.write((char*)data, fs[0]* sizeof(short));
