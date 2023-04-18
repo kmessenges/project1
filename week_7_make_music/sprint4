@@ -1,0 +1,78 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+float getfrequency(char);
+float getAmplitude(int);
+float getLength(int);
+
+int main() {
+	char header[44];
+	unsigned short* n;//num channel
+	int* fs; //samplerate
+	int* b; //byte rate
+
+	ifstream xx;
+	xx.open("Beatles-LetItBe-wav_30s.wav", ios::binary | ios::in);
+	if (!xx) return 666;
+	xx.read(header, sizeof(header));
+
+	n = (unsigned short*)(header + 22);
+	fs = (int*)(header + 24);
+	b = (int*)(header + 28);
+
+	*n = 1;
+	*b = n[0] * fs[0] * sizeof(short);
+
+	int note, eu, ss;
+	char hh;
+	float *f, *a, *T;
+	short* akbo;
+	const float pi = 3.141592;
+	float dt = 1. / fs[0];
+
+	akbo = new short[5 * fs[0]];
+
+
+	ifstream yy("night.txt");
+	yy >> note;
+	f = new float[note];
+	a = new float[note];
+	T = new float[note];
+	for (int i = 0; i < note; i++) {
+		yy >> eu >> hh >> ss;
+		f[i] = getfrequency(hh);
+		a[i] = getAmplitude(ss);
+		T[i] = getLength(eu);
+	}
+	yy.close();
+
+	ofstream zz("mymusic.wav", ios::binary | ios::out);
+	if (!zz) return 666;
+	zz.write(header, 44 * sizeof(char));
+
+	for (int i = 0; i < note; i++) {
+		for (int i2 = 0; i2 < T[i] * fs[0] * 2; i2++) {
+			akbo[i2] = (short)(a[i] * sin(2.0 * pi * f[i] * i2 * dt));
+		}
+		zz.write((char*)akbo, T[i] * fs[0] * 2);
+	}
+
+}
+
+float getfrequency(char aa) {
+	if (aa == 'C') return 277.18; //C#
+	else if (aa == 'D') return 293.66;
+	else if (aa == 'E') return 329.63;
+	else if (aa == 'F') return 369.99; //F#
+	else if (aa == 'G') return 415.30;  //G#
+	else if (aa == 'A') return 440.00;
+	else if (aa == 'B') return 493.88;
+	else return 111;
+	
+}
+float getAmplitude(int bb) {
+	return 10000. * bb / 10.;
+}
+float getLength(int cc) {
+	return (float)cc * 1 / 8;
+}
