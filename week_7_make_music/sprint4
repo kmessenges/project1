@@ -79,7 +79,7 @@ float make_akbo(float* f, float* a, float* T, short* akbo, int n) {
 	int fs = 44100;
 	const float pi = 3.141592;
 	float dt = 1. / fs;
-	for (int i2 = 0; i2 < T[n] * fs * 2; i2++) {
+	for (int i2 = 0; i2 < T[n] * fs; i2++) {
 		akbo[i2] = (short)(a[n] * sin(2.0 * pi * f[n] * i2 * dt));
 	}
 	return 1;
