@@ -4,6 +4,7 @@ using namespace std;
 float getfrequency(char);
 float getAmplitude(int);
 float getLength(int);
+float make_akbo(float* , float* , float* , short* , int );
 
 int main() {
 	char header[44];
@@ -15,7 +16,6 @@ int main() {
 	xx.open("Beatles-LetItBe-wav_30s.wav", ios::binary | ios::in);
 	if (!xx) return 666;
 	xx.read(header, sizeof(header));
-	xx.close();
 
 	n = (unsigned short*)(header + 22);
 	fs = (int*)(header + 24);
@@ -28,10 +28,8 @@ int main() {
 	char hh;
 	float *f, *a, *T;
 	short* akbo;
-	const float pi = 3.141592;
-	float dt = 1. / fs[0];
 
-	akbo = new short[6 * fs[0]];
+	akbo = new short[5 * fs[0]];
 
 
 	ifstream yy("night.txt");
@@ -39,6 +37,7 @@ int main() {
 	f = new float[note];
 	a = new float[note];
 	T = new float[note];
+	
 	for (int i = 0; i < note; i++) {
 		yy >> eu >> hh >> ss;
 		f[i] = getfrequency(hh);
@@ -47,18 +46,16 @@ int main() {
 	}
 	yy.close();
 
-	ofstream zz("mymusic.wav", ios::binary | ios::out);
+	ofstream zz("mymusic_Test.wav", ios::binary | ios::out);
 	if (!zz) return 666;
 	zz.write(header, 44 * sizeof(char));
 
 	for (int i = 0; i < note; i++) {
-		for (int i2 = 0; i2 < T[i] * fs[0] * 2; i2++) {
-			akbo[i2] = (short)(a[i] * sin(2.0 * pi * f[i] * i2 * dt));
-		}
+		make_akbo(f, a, T, akbo, i);
 		zz.write((char*)akbo, T[i] * fs[0] * 2);
 	}
 	zz.close();
-return 1;
+	return 100;
 }
 
 float getfrequency(char aa) {
@@ -77,4 +74,13 @@ float getAmplitude(int bb) {
 }
 float getLength(int cc) {
 	return (float)cc * 1 / 8;
+}
+float make_akbo(float* f, float* a, float* T, short* akbo, int n) {
+	int fs = 44100;
+	const float pi = 3.141592;
+	float dt = 1. / fs;
+	for (int i2 = 0; i2 < T[n] * fs * 2; i2++) {
+		akbo[i2] = (short)(a[n] * sin(2.0 * pi * f[n] * i2 * dt));
+	}
+	return 1;
 }
