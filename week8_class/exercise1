@@ -1,0 +1,30 @@
+// a class with 3 member data and 1 member function 
+class student {     // class name is student
+    // constructor
+    student( ) {
+    w = int(random(60,100));
+    h = int(random(60,100));
+    r = int(random(60,100));
+  }  
+    // member data
+    int w, h, r;
+    // member function
+    void study(int score){
+      if(score>80){
+        println("good!");
+      }
+      else println("study more!");
+    }
+}
+void setup(){
+  student kim, ji, sung;
+  kim = new student();
+  ji = new student();
+  sung = new student();
+  print("kim ");
+  kim.study(kim.w);
+  print("ji ");
+  ji.study(ji.h);
+  print("sung ");
+  sung.study(sung.r);
+}
