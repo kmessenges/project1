@@ -1,0 +1,30 @@
+Siha a, b, c;
+void setup() {
+  size(600, 300);
+  a = new Siha(100, 100, 100,1);
+  b = new Siha(500, 100, 150,3);
+  c = new Siha(200,130,100,4);
+  a.Life();   b.Life();   c.Life();
+}
+class Siha {  
+  Siha(float p, float q, float r, int cc) {
+    x = p;      y = q;     d = r;  op = cc;
+  }
+  Siha() {  
+    x = random(0,width);
+    y = random(0,height);
+    d = 50;
+  };
+  float x, y, d, op;
+  void Life() {
+    if(op== 0) fill(255,255,0);
+    else if (op == 1) fill (255);
+    else if (op == 2) fill (0,255,255);
+    else if (op == 3) fill (255,0,0);
+    else if (op == 4) fill (0,0,255);
+    ellipse(x, y, d, d/3*2);;
+    circle(x-d/5, y-d/6, d/5);
+    arc(x+d/5, y-d/6, d/5, d/5, PI, 2*PI);
+    arc(x, y, d*2/3, d/5, 0, PI);
+  }
+}
