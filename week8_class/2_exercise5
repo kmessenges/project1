@@ -1,0 +1,42 @@
+Siha [] aa;
+void setup(){
+  size(1000, 500);
+  aa = new Siha[10];
+  for (int i= 0; i<10; i++){
+    aa[i] = new Siha();
+  }
+}
+void draw(){
+  background(128);
+
+  for (int i= 0; i<10; i++){
+    aa[i].act();
+    aa[i].Life();
+  }
+}
+class Siha {
+  Siha() {
+  x = random(0,width);
+  y = random(0,height);
+  d = random(30,50);
+  vx = random(0,2);
+  vy = random(0,2);
+};
+  Siha(float p, float q, float r) {
+    x = p;      y = q;     d = r;
+  }
+  float x, y, d, vx, vy;
+  void Life() {
+    ellipse(x, y, d, d/3*2);
+    circle(x-d/5, y-d/6, d/5);
+    arc(x+d/5, y-d/6, d/5, d/5, PI, 2*PI);
+    arc(x, y, d*2/3, d/5, 0, PI);
+  }
+  void act(){
+    x += vx; y += vy;
+    if(x>width) x=0;
+    if(x<0) x=width;
+    if(y>height) y=0;
+    if(y<0) y = height;
+  }
+}
