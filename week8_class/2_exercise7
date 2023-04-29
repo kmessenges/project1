@@ -1,0 +1,163 @@
+Siha [] aa;
+punleu [] pp;
+imp c;
+void setup() {
+  size(1500, 1000);
+  aa = new Siha[5];
+  for (int i=0; i<5; i++) {
+    aa[i] = new Siha();
+  }
+  pp = new punleu[3];
+  for (int i=0; i<3; i++) {
+    pp[i] = new punleu(random(width),random(height));
+  }
+  c = new imp();
+}
+void draw(){
+  background(0,255,255);
+  for (int i=0; i<3; i++) {
+    pp[i].update();
+    pp[i].punleuShow();
+  }  
+  for (int i=0; i<5; i++) {
+    if(i != 4){
+      for(int j=i+1;j<5;j++){
+        aa[i].collide(aa[j]);
+      }
+    }
+    aa[i].act();
+    aa[i].Life();
+    c.act();
+    c.character();
+  }  
+}
+
+class Siha {
+  Siha() {
+    x = random(0,width);
+    y = random(0,height);
+    d = random(100,200);
+    vx = random(-3,3); vy = random(-2,2);
+  };
+  Siha(float p, float q, float r) {
+    x = p;     y = q;     d = r;
+    vx = random(-3,3); vy = random(-2,2);
+  }
+  float x, y, d, vx, vy;
+  void collide(Siha b){
+    float dd;
+    dd = sqrt((x-b.x)*(x-b.x) + (y-b.y)*(y-b.y));
+    if(dd < (d+b.d)/4){
+      vx = vy = 0;
+      b.vx = b.vy = 0;
+    }
+  }
+  void act(){
+    x += vx;  y += vy;
+    if(x>width) x=0;
+    if(x<0) x=width;
+    if(y>height) y=0;
+    if(y<0) y = height;
+  }
+  void Life() {
+    fill(255);
+    ellipse(x, y, d, d/3*2);
+    circle(x-d/5, y-d/6, d/5);
+    arc(x+d/5, y-d/6, d/5, d/5, PI, 2*PI);
+    arc(x, y, d*2/3, d/5, 0, PI);
+  }
+}
+class punleu {
+  // constructor
+  punleu(float a, float b) {
+    x = a;
+    y = b;
+    vx = random(-3,3);
+    vy = random(-2,2);
+  }
+  // member data
+  float x, y, vx, vy;
+  // member function
+  void update(){
+   x += vx;
+   y += vy;
+   if(x<0 || x>width) vx = - vx;
+   if(y<0 || y>height) vy = - vy;
+  }
+  void punleuShow() {
+    fill(0, 0, 255);
+    ellipse(x, y+30, 200, 210);
+    fill(255);
+    // eye
+    ellipse(x-40, y, 50, 50);
+    ellipse(x+30, y, 50, 50);
+    // black eye
+    fill(0);
+    ellipse(x-40, y, 20, 20);
+    ellipse(x+30, y, 20, 20);
+    fill(0, 255, 0);
+    //mouth
+    arc(x, y+75, 80, 50, 0, 3.14);
+    fill(0, 255, 0);
+  }
+}
+class imp{
+  imp(){x = 350; y = 350; z=50; vx = random(-2,2); vy = random(-2,2);}
+  float x,y,z,vx,vy;
+  void character(){
+    body();
+    leg();
+    head();
+    handtail();
+  }
+  void body(){
+    strokeWeight(10);
+    fill(178,34,34);
+    arc(x,y-100,6*z,6*z,PI,2*PI);
+    strokeWeight(1);
+    stroke(178,34,34);
+    rect(x-150,y-100,300,250);
+    strokeWeight(10);
+    stroke(0,0,0);
+    line(x-150,y-100,x-150,y+150);
+    line(x+150,y-100,x+150,y+150);
+  }
+  void leg(){
+    float p,q;
+    stroke(178,34,34);
+    rect(x-150,y+150,2.5*z,2*z);
+    rect(x+150-2.5*z,y+150,2.5*z,2*z);
+    stroke(0,0,0);
+    p=y+150+2*z;
+    q=x+150-2.5*z;
+    line(x-150,y+150,x-150,p);
+    line(x+150,y+150,x+150,p);
+    line(x-150,p,x-150+2.5*z,p);
+    line(x+150,p,q,p);
+    line(x-150+2.5*z,p,x-150+2.5*z,y+150);
+    line(q,p,q,y+150);
+    line(x-150+2*z,y+150,x+150-2*z,y+150);
+  }
+  void head(){
+    strokeWeight(10);
+    fill(178,34,34); //빨간색//
+    arc(x,y-100,6*z,6*z,PI,2*PI);
+    fill(135,206,235);
+    ellipse(x,y-100,4*z, 3*z);
+    fill(224,255,255);
+    ellipse(x-30,y-120,1.8*z,z);
+  }
+  void handtail(){
+    fill(178,34,34);
+    rect(x-200, y+50,z,3*z);
+    circle(x+150+0.5*z,y+50+2*z,z);
+  }
+  void act(){
+    x += vx;
+    y += vy;
+    if(x>width) vx = -vx;
+    if(x<0) vx = -vx;
+    if(y>height) vy = -vy;
+    if(y<0)vy = -vy;
+  }
+}
