@@ -1,0 +1,195 @@
+pizza a,a2;
+imp b,b2;
+joker c,c2;
+void setup(){
+  size(1000,1000);
+  b = new imp();
+  a = new pizza();
+  c = new joker(300,400,10,20);
+  b2 = new imp();
+  a2 = new pizza();
+  c2 = new joker(300,400,5,10);
+}
+void draw(){  
+  background(128);
+  a.character();
+  a.act();
+  a2.character();
+  a2.act();
+  b.character();
+  b.act();
+  b2.character();
+  b2.act();
+  c.act();
+  c2.act();
+  c.update();
+  c2.update();
+}
+class pizza{
+  pizza(){x=200;y=200;s=100;vx=random(-2,2);vy=random(-2,2);}
+  float x,y,vx,vy,s;
+  
+  void character(){
+    bread();
+    ham();
+    olive();
+  }
+  void bread(){
+    fill(170,100,0);
+    arc(x,y+0.7*s,3*s,3*s,8*PI/6,10*PI/6);
+    fill(255,204,102);
+    arc(x,y+0.7*s,2.6*s,2.6*s,8*PI/6,10*PI/6);
+  }
+  void ham(){
+    fill(200,0,0);
+    circle(x-0.3*s,y-0.35*s,30);
+    fill(200,0,0);
+    circle(x+0.25*s,y-0.3*s,30);
+    fill(200,0,0);
+    circle(x,y+0.2*s,30);
+  }
+  void olive(){
+    fill(0,0,0);
+    circle(x+0.2*s,y-0.05*s,15);
+    fill(255,204,102);
+    circle(x+0.2*s,y-0.05*s,10);
+    fill(0,0,0);
+    circle(x-0.03*s,y-0.33*s,15);
+    fill(255,204,102);
+    circle(x-0.03*s,y-0.33*s,10);
+    fill(0,0,0);
+    circle(x-0.2*s,y-0.02*s,15);
+    fill(255,204,102);
+    circle(x-0.2*s,y-0.02*s,10); 
+  }
+  void act(){
+    x += vx;
+    y += vy;
+    if(x>width) vx = -vx;
+    if(x<0) vx = -vx;
+    if(y>height) vy = -vy;
+    if(y<0)vy = -vy;
+  }
+}
+class imp{
+  imp(){x = 350; y = 350; z=50; vx = random(-2,2); vy = random(-2,2);}
+  float x,y,z,vx,vy;
+  void character(){
+    body();
+    leg();
+    head();
+    handtail();
+  }
+  void body(){
+    strokeWeight(10);
+    fill(178,34,34);
+    arc(x,y-100,6*z,6*z,PI,2*PI);
+    strokeWeight(1);
+    stroke(178,34,34);
+    rect(x-150,y-100,6*z,5*z);
+    strokeWeight(10);
+    stroke(0,0,0);
+    line(x-150,y-100,x-150,y+150);
+    line(x+150,y-100,x+150,y+150);
+  }
+  void leg(){
+    float p,q;
+    stroke(178,34,34);
+    rect(x-150,y+150,2.5*z,2*z);
+    rect(x+150-2.5*z,y+150,2.5*z,2*z);
+    stroke(0,0,0);
+    p=y+150+2*z;
+    q=x+150-2.5*z;
+    line(x-150,y+150,x-150,p);
+    line(x+150,y+150,x+150,p);
+    line(x-150,p,x-150+2.5*z,p);
+    line(x+150,p,q,p);
+    line(x-150+2.5*z,p,x-150+2.5*z,y+150);
+    line(q,p,q,y+150);
+    line(x-150+2*z,y+150,x+150-2*z,y+150);
+  }
+  void head(){
+    strokeWeight(10);
+    fill(178,34,34); //빨간색//
+    arc(x,y-100,6*z,6*z,PI,2*PI);
+    fill(135,206,235);
+    ellipse(x,y-100,4*z, 3*z);
+    fill(224,255,255);
+    ellipse(x-30,y-120,1.8*z,z);
+  }
+  void handtail(){
+    fill(178,34,34);
+    rect(x-200, y+50,z,3*z);
+    circle(x+150+0.5*z,y+50+2*z,z);
+  }
+  void act(){
+    x += vx;
+    y += vy;
+    if(x>width) vx = -vx;
+    if(x<0) vx = -vx;
+    if(y>height) vy = -vy;
+    if(y<0)vy = -vy;
+  }
+}
+class joker {
+  float x, y, speedX, speedY;
+  
+  joker (float x, float y, float speedX, float speedY) {
+    this.x = x;
+    this.y = y;
+    this.speedX = speedX;
+    this.speedY = speedY;
+  }
+  
+  void act() {
+    // 얼굴
+    fill(255, 235, 205);
+    ellipse(x, y, 200, 200);
+    
+    // 코
+    fill(255,0,0);
+    circle(x, y, 50);
+    
+    // 귀
+    fill(0, 255, 0);
+    ellipse(x - 110, y - 60, 50, 50);
+    ellipse(x + 110, y - 60, 50, 50);
+    
+    // 눈
+    fill(255);
+    ellipse(x - 70, y , 50, 50);
+    ellipse(x + 70, y , 50, 50);
+    fill(0);
+    ellipse(x - 70, y , 20, 20);
+    ellipse(x + 70, y , 20, 20);
+    
+    // 입
+    stroke(0);
+    strokeWeight(3);
+    arc(x, y + 50, 100, 80, 0, PI);
+    
+    // 몸통
+    fill(255, 0, 0);
+    rect(x - 50, y + 100, 100, 100, 20);
+    
+    // 팔
+    fill(0, 255, 0);
+    rect(x - 140, y + 100, 60, 30, 20);
+    rect(x - 90, y + 100, 60, 30, 20);
+    rect(x + 30, y + 100, 60, 30, 20);
+    rect(x + 80, y + 100, 60, 30, 20);
+  }
+  
+  void update() {
+    x += speedX;
+    y += speedY;
+    
+    if (x < 0 || x > 1000) {
+      speedX = -speedX;
+    }
+    
+    if (y < 0 || y > 1000) {
+      speedY = -speedY;
+    }
+  }
+}
