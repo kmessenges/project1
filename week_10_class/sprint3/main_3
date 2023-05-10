@@ -1,0 +1,19 @@
+#include <iostream>
+#include "FC.h"
+#include "city.h"
+using namespace std;
+
+int main() {
+	CITY cities[4];
+	cities[0] = CITY((char*)"Seoul.txt");
+	cities[1] = CITY((char*)"Paris.txt");
+	cities[2] = CITY((char*)"Newyork.txt");
+	cities[3] = CITY((char*)"Sydney.txt");
+
+	cities[0].out((char*)"Seoul_T.txt");
+	cities[1].out((char*)"Paris_T.txt");
+	cities[2].out((char*)"Newyork_T.txt");
+	cities[3].out((char*)"Sydney_T.txt");
+	
+	return 123;
+}
