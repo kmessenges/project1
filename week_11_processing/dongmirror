@@ -1,0 +1,48 @@
+class dongmirror{
+  dongmirror(){x = 500; y = 500; s = 10; vx = random(-6,6); vy = random(-6,6);}
+  float x,y,s,vx,vy;
+  void character(){
+    concentric_circle(); // 4개의 동심원들
+    side_circle(); // 10개의 비동심원
+    eye_ellipse(); // 눈-4개의 타원
+  }
+  void concentric_circle(){
+    fill(3,105,143); // 청색
+    circle(x,y,s*40);
+    fill(5,76,102);  // 진청색
+    circle(x,y,s*27);
+    circle(x,y,s*18);
+    fill(3,105,143);  // 청색
+    circle(x,y,s*8); //여기까지 동심원
+  }
+  void side_circle(){
+    fill(5,76,102);  // 진청색
+    circle(x,y-s*20,s*8.5);
+    circle(x,y+s*20,s*8.5);
+    circle(x-s*17.32,y-s*10,s*8.5);
+    circle(x+s*17.32,y-s*10,s*8.5);
+    circle(x-s*17.32,y+s*10,s*8.5);
+    circle(x+s*17.32,y+s*10,s*8.5);  //여기까지 바깥 원에 달린 작은 원 6개
+    fill(3,105,143);  // 청색
+    circle(x-s*6.365,y-s*6.365,s*2.5);
+    circle(x-s*6.365,y+s*6.365,s*2.5);
+    circle(x+s*6.365,y-s*6.365,s*2.5);
+    circle(x+s*6.365,y+s*6.365,s*2.5);  //여기까지 안쪽 제일 작은 원 4개
+  }
+  void eye_ellipse(){
+    fill(237,200,33);  // 노란색
+    ellipse(x+s*8.8,y,s*5,s*9);
+    ellipse(x-s*8.8,y,s*5,s*9);
+    fill(1,1,1);  // 검은색
+    ellipse(x+s*8.8,y,s*2,s*3.8);
+    ellipse(x-s*8.8,y,s*2,s*3.8);  //여기까지 눈
+  }
+    void act(){
+    x += vx;
+    y += vy;
+    if(x>width) vx = -vx;
+    if(x<0) vx = -vx;
+    if(y>height) vy = -vy;
+    if(y<0)vy = -vy;
+    }
+}
