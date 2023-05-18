@@ -1,0 +1,30 @@
+mycharacter [] mm;
+imp a, b, c;
+dongmirror [] nn;
+void setup() {
+  size(1500, 1000);
+  mm = new mycharacter[3];
+  nn = new dongmirror[3];
+  for (int i=0; i<3; i++) {
+    mm[i] = new mycharacter(random(width), random(height), 300);
+    nn[i] = new dongmirror();
+  }
+  a = new imp(100,100,50);
+  b = new imp();
+  c = new imp(300,400,50);
+}
+void draw(){
+  background(0,255,255);
+  for (int i=0; i<3; i++) {
+    mm[i].update();
+    mm[i].mycharacterShow();
+    nn[i].character();
+    nn[i].act();
+  }  
+  a.character();
+  a.act();
+  b.character();
+  b.mouse();
+  c.character();
+  c.key_board();
+}
