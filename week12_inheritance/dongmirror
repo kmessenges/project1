@@ -1,0 +1,94 @@
+dongmirror [] j;
+dm_level_10 [] k;
+dm_level_20 [] l;
+class dongmirror{
+  dongmirror(float a, float b, float c){
+    x = a; y = b; s = c;
+  }
+  float x,y,s;
+  void character(){
+  concentric_circle();
+  side_circle();
+  eye_ellipse();
+  }
+  void concentric_circle(){
+    fill(3,105,143); // 청색
+    circle(x,y,s*40);
+    fill(5,76,102);  // 진청색
+    circle(x,y,s*27);
+    circle(x,y,s*18);
+    fill(3,105,143);  // 청색
+    circle(x,y,s*8); //여기까지 동심원
+  }
+  void side_circle(){
+    fill(5,76,102);  // 진청색
+    circle(x,y-s*20,s*8.5);
+    circle(x,y+s*20,s*8.5);
+    circle(x-s*17.32,y-s*10,s*8.5);
+    circle(x+s*17.32,y-s*10,s*8.5);
+    circle(x-s*17.32,y+s*10,s*8.5);
+    circle(x+s*17.32,y+s*10,s*8.5);  //여기까지 바깥 원에 달린 작은 원 6개
+    fill(3,105,143);  // 청색
+    circle(x-s*6.365,y-s*6.365,s*2.5);
+    circle(x-s*6.365,y+s*6.365,s*2.5);
+    circle(x+s*6.365,y-s*6.365,s*2.5);
+    circle(x+s*6.365,y+s*6.365,s*2.5);  //여기까지 안쪽 제일 작은 원 4개
+  }
+  void eye_ellipse(){
+    fill(237,200,33);  // 노란색
+    ellipse(x+s*8.8,y,s*5,s*9);
+    ellipse(x-s*8.8,y,s*5,s*9);
+    fill(1,1,1);  // 검은색
+    ellipse(x+s*8.8,y,s*2,s*3.8);
+    ellipse(x-s*8.8,y,s*2,s*3.8);  //여기까지 눈
+  }
+}
+class dm_level_10 extends dongmirror{
+  dm_level_10(float a, float b, float c){
+  super(a,b,c);
+ }
+ void level10(){
+   fill(255);
+  circle(x + s*17,y,s*8.5);
+  circle(x - s*17,y,s*8.5);
+   
+ }
+}
+
+class dm_level_20 extends dongmirror{
+  dm_level_20(float a, float b, float c){
+    super(a, b, c);
+  }
+  void level20(){
+  fill(255,0,0);
+  ellipse(x + s*8.8, y, s*5, s*9);
+  ellipse(x - s*8.8, y, s*5, s*9);
+  fill(0);
+  ellipse(x+s*8.8,y,s*2,s*3.8);
+  ellipse(x-s*8.8,y,s*2,s*3.8);
+ 
+  
+ }
+}
+void setup(){
+  size(1500, 1000);
+  j = new dongmirror[3];
+  k = new dm_level_10[3];
+  l = new dm_level_20[3];
+  for(int i = 0; i < 3; i++){
+  j[i] = new dongmirror(random(width),random(height),10);
+  k[i] = new dm_level_10(random(width),random(height),10);
+  l[i] = new dm_level_20(random(width),random(height),10);
+  
+  }
+}
+void draw(){
+  background(40,40,40);
+  for(int i = 0; i < 3; i++){
+  j[i].character();
+  k[i].character();
+  k[i].level10();
+  l[i].character();
+  l[i].level20();
+ }
+}
