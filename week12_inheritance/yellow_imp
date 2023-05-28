@@ -1,0 +1,23 @@
+class yellow_imp extends imp{
+  yellow_imp(){
+    super();
+    cc = 25;
+  }
+  yellow_imp(int xx, int yy, int zz){
+  super(xx,yy,zz);
+  cc = 25;
+  }
+  void sword(){
+    fill(255,0,0);
+    rect(x+170,y-100,40,300);
+    triangle(x+180,y-100, x+280,y-100, x+200, y-50);
+  }
+  void devil(){
+    fill(255,0,0);
+    strokeWeight(10);
+    triangle(x-130, y-300, x-100, y-250, x-70, y-250);
+    triangle(x+130, y-300, x+100, y-250, x+70, y-250);
+    ellipse(x-30,y-120,40,30);
+  }
+ 
+}
