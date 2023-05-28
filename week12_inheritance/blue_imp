@@ -1,0 +1,23 @@
+class blue_imp extends imp{
+  blue_imp(){
+    super();
+    cc = 15;
+  }
+  blue_imp(int xx, int yy, int zz) {
+    super(xx,yy,zz);
+    cc = 15;
+  }
+  void amazing(){
+   character();
+   strokeWeight(10);
+   fill(0);
+   rect(x+200,y-300,10,100);
+   circle(x+200+5,y-150,10);
+  }
+  void ring(){
+    strokeWeight(20);
+    stroke(255);
+    fill(0,255,255);
+    ellipse(x, y-300, 200, 100);
+  }
+}
