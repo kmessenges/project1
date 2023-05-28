@@ -1,0 +1,27 @@
+imp a;
+blue_imp [] b;
+yellow_imp [] c;
+void setup() {
+  size(1500, 1000);
+  b = new blue_imp[2];
+  c = new yellow_imp[2];
+  a = new imp(100,100,50);
+  b[0] = new blue_imp(100,100,50);
+  b[1] = new blue_imp(100,100,50);
+  c[0] = new yellow_imp(1000,100,50);
+  c[1] = new yellow_imp(1000,100,50);
+}
+void draw(){
+  background(0,255,255);
+  a.character();
+  a.act();
+  for( int i = 0; i<2; i++){
+  b[i].act();
+  b[i].amazing();
+  b[i].ring();
+  c[i].character();
+  c[i].act();
+  c[i].sword();
+  c[i].devil();
+  }
+}
