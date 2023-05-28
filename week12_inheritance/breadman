@@ -1,0 +1,95 @@
+breadman [] mm;
+super_breadman [] bb;
+hair_breadman [] hh;
+void setup() {
+  size(1500, 1000);
+  mm = new breadman[3];
+  bb = new super_breadman[3];
+  hh = new hair_breadman[3];
+  for (int i=0; i<3; i++) {
+    mm[i] = new breadman(random(width), random(height), 300);
+    bb[i] = new super_breadman(random(100,1300),random(height),200);
+    hh[i] = new hair_breadman(random(width),random(height), 200);
+  }
+}
+void draw(){
+  background(0,255,255);
+  for (int i=0; i<3; i++) {
+    mm[i].update();    
+    mm[i].breadmanShow();
+    bb[i].fly();
+    bb[i].cloak();
+    bb[i].breadmanShow();
+    bb[i].hand();
+    hh[i].update();
+    hh[i].hair();
+    hh[i].breadmanShow();
+   }  
+}
+
+class breadman{
+  breadman(float a, float b, float c){
+    x = a;
+    y = b;
+    s = c;
+    vx = random(-3,3);
+    vy = random(-3,3);
+  }
+  float x, y, s, vx, vy;
+   void update(){
+    x += vx;
+    y += vy;
+    if(x<0 || x>width) vx = -vx;
+    if(y<0 || y>height) vy = - vy;
+  } 
+  void breadmanShow(){
+    fill(251,206,177);
+    circle(x,y,s);
+    fill(250,0,0);
+    ellipse(x,y,s*2/9,s*17/90);
+    fill(0,0,0);
+    ellipse(x-s*13/90,y-s/5,s/9,s*8/45);
+    ellipse(x+s*13/90,y-s/5,s/9,s*8/45);
+    fill(255,127,0);
+    circle(x-s/5,y+s/30,s/5);
+    circle(x+s/5,y+s/30,s/5);
+    fill(0,0,0);
+    quad(x-s*2/9,y+s*109/450,x+s*2/9,y+s*109/450,x+s*2/9,y+s*6/25,x-s*2/9,y+s*6/25);
+    fill(255,0,0);
+    arc(x,y+s*11/45,s*4/9,s*2/9,0,PI);
+  }
+}
+
+class super_breadman extends breadman{
+  super_breadman(float x, float y, float z){
+    super(x, y, z);
+  }
+  void hand(){
+    fill(255,255,0);
+    circle(x-s/5-5,y+s/2,s/3);
+    circle(x+s/5+5,y+s/2,s/3);
+  }
+  void cloak(){
+    fill(0,0,0);
+    quad(x-s/3+12,y+s/5,x+s/3-12,y+s/5,x+s/2,y+s,x-s/2,y+s);
+  }
+  void fly(){
+    y += vy;
+    if(y<0 || y>height) vy = - vy;
+  } 
+}
+
+class hair_breadman extends breadman{
+  hair_breadman(float a, float b, float c){
+    super(a,b,c);
+  }
+  void hair(){
+    stroke(0);
+    strokeWeight(5);
+    line(x-s/5,y,x-s/5,y-s/2-10);
+    line(x,y,x,y-s/2-15);
+    line(x+s/5,y,x+s/5,y-s/2-10);
+    line(x-s/3,y,x-s/3,y-s/2);
+    line(x+s/3,y,x+s/3,y-s/2);
+  } 
+}
