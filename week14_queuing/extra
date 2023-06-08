@@ -1,0 +1,87 @@
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <Windows.h>
+using namespace std;
+
+class queue {
+public:
+    queue() {};
+    queue(int NI, int NO, int capacity, int initial_product) {
+        this->NI = NI;
+        this->NO = NO;
+        this->capacity = capacity;
+        this->initial_product = initial_product;
+    }
+
+    int NI, NO, capacity, initial_product;
+
+
+    void FIFO();
+};
+
+void queue::FIFO() {
+    int elapsedSeconds = 0, T = 1;
+    int NofPackets[10];
+    int ni, no;
+    int lost = 0;
+    int overflow = 0;
+    int underflow = 0;
+
+    vector <int>q;
+
+    for (int i = 0; i < initial_product; i++) {
+        q.push_back(rand() % 20);
+    }
+
+    while (elapsedSeconds < 10) {
+        Sleep(T * 10);
+        elapsedSeconds += T;
+        ni = rand() % NI;
+        if (capacity < q.size() + ni) {
+            overflow += 1;
+            lost += q.size() + ni - capacity;
+            ni = capacity - q.size();
+        }
+
+        for (int i = 0; i < ni; i++) {
+            q.push_back(rand() % 20);
+        }
+        no = rand() % NO;
+        for (int i = 0; i < no; i++) {
+            if (q.size() != 0) {
+                q.erase(q.begin());
+            }
+            else {
+                underflow += 1;
+                break;
+            }
+        }
+        NofPackets[elapsedSeconds - 1] = q.size();
+        cout << elapsedSeconds << " Hour ---" << NofPackets[elapsedSeconds - 1] << " Left" << endl;
+
+    }
+    int avg = 0;
+    int max = 0;
+    for (int i = 0; i < 10; i++) {
+        avg += NofPackets[i];
+        if (max < NofPackets[i])max = NofPackets[i];
+    }
+    avg /= 10;
+    cout << "평균 공급 물량 : " << avg << endl;
+    cout << "최고 공급 물량 : " << max << endl;
+    cout << "저장 공간 부족으로 돌려보낸 물량 : " << lost << endl;
+    cout << "저장 공간 부족 발생 횟수: " << overflow << endl;
+    cout << "재고 부족 발생 횟수 " << underflow << endl;
+}
+
+void main() {
+    queue drink(10, 10, 100, 50), health(15, 10, 200, 100), home(10, 20, 100, 80);
+    cout << "drink" << endl;
+    drink.FIFO();
+    cout << "health" << endl;
+    health.FIFO();
+    cout << "home" << endl;
+    home.FIFO();
+
+}
